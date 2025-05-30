@@ -1,8 +1,12 @@
 ---
 layout: default
-title: Welcome
+title: HR Karthik
 ---
 
-# Welcome to My Site
+<header class="sticky-header">
+  <h1>HR Karthik</h1>
+  <p>My cool hacker-style website</p>
+</header>
 
-This is a Jekyll-powered GitHub Pages site using the **Hacker** theme.
+<!-- Your other content starts below -->
+
