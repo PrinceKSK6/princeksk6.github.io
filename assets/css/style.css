@@ -1,0 +1,15 @@
+.sticky-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #111;
+  color: #a6e22e;
+  padding: 15px;
+  z-index: 1000;
+  border-bottom: 1px dashed #a6e22e;
+  text-align: center;
+}
+
+body {
+  padding-top: 80px; /* adjust to match header height */
+}
