@@ -1,6 +1,6 @@
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCZQDRart8qeVWf0qFIC0NhYTlTWZ-l1XE",
+  apiKey: "AIzaSyDoMnGC8b0rql4IMC7qSYXsQoTsT1z0i4A",
   authDomain: "driver-manager-a242b.firebaseapp.com",
   projectId: "driver-manager-a242b",
   storageBucket: "driver-manager-a242b.firebasestorage.app",
