@@ -1,7 +1,7 @@
 function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
-  const email = username + "@yourapp.com";
+  const email = username + "@drivermanager.app";
   firebase.auth().signInWithEmailAndPassword(email, password).then(userCred => {
     const uid = userCred.user.uid;
     return db.collection("users").doc(uid).get();
