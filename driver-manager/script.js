@@ -1,8 +1,3 @@
-firebase.auth().onAuthStateChanged((user) => {
-  if (!user) {
-    window.location.href = "index.html";
-  }
-});
 function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
