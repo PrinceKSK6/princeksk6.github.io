@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manager Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h2>Manager Dashboard</h2>
+  <div>
+    <h3>Drivers IN Today</h3>
+    <ul id="todayList"></ul>
+  </div>
+  <div>
+    <h3>Attendance Logs</h3>
+    <input type="date" id="fromDate">
+    <input type="date" id="toDate">
+    <button onclick="loadAllLogs()">Load Logs</button>
+    <button onclick="exportLogs()">Export to Excel</button>
+    <table id="allLogs"><thead><tr><th>User</th><th>Type</th><th>Shift</th><th>Note</th><th>Timestamp</th></tr></thead><tbody></tbody></table>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
