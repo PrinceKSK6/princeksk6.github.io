@@ -83,6 +83,18 @@ function loadAllLogs() {
   });
 }
 
+function logout() {
+  firebase.auth().signOut()
+    .then(() => {
+      // Redirect to login page (index.html)
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      alert("Error during logout: " + error.message);
+    });
+}
+
+
 function exportLogs() {
   const rows = [["User", "Type", "Shift", "Note", "Timestamp"]];
   document.querySelectorAll("#allLogs tbody tr").forEach(tr => {
