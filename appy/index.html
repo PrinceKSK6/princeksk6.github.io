@@ -1,0 +1,29 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Driver Manager Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body class="w3-light-grey fade-in">
+
+<div class="w3-container w3-padding-64 w3-center">
+  <div class="w3-card-4 w3-white w3-padding-large w3-animate-top" style="max-width: 400px; margin:auto;">
+    <h2 class="w3-text-blue">Login</h2>
+    <input class="w3-input w3-margin-bottom w3-border" type="text" id="username" placeholder="Username">
+    <input class="w3-input w3-margin-bottom w3-border" type="password" id="password" placeholder="Password">
+    <button class="w3-button w3-blue w3-round-large w3-hover-indigo" onclick="login()">Login</button>
+    <p id="error" class="w3-text-red"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
