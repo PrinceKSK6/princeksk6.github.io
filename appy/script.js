@@ -1,3 +1,4 @@
+
 function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
@@ -14,6 +15,14 @@ function login() {
   });
 }
 
+function logout() {
+  firebase.auth().signOut().then(() => {
+    window.location.href = "index.html";
+  }).catch(error => {
+    alert("Logout error: " + error.message);
+  });
+}
+
 function markIN() {
   const shift = document.getElementById("shift").value;
   const uid = firebase.auth().currentUser.uid;
@@ -22,8 +31,9 @@ function markIN() {
     type: "IN",
     shift,
     timestamp: new Date().toISOString()
+  }).then(() => {
+    alert("IN marked");
   });
-  alert("IN marked");
 }
 
 function markOUT() {
@@ -32,8 +42,9 @@ function markOUT() {
     uid,
     type: "OUT",
     timestamp: new Date().toISOString()
+  }).then(() => {
+    alert("OUT marked");
   });
-  alert("OUT marked");
 }
 
 function markDUTY() {
@@ -44,8 +55,9 @@ function markDUTY() {
     type: "DUTY",
     note,
     timestamp: new Date().toISOString()
+  }).then(() => {
+    alert("ON DUTY marked");
   });
-  alert("DUTY recorded");
 }
 
 function loadLogs() {
@@ -66,6 +78,45 @@ function loadLogs() {
   });
 }
 
+function loadAvailableDrivers() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  db.collection("logs")
+    .where("timestamp", ">=", today.toISOString())
+    .where("timestamp", "<", tomorrow.toISOString())
+    .get()
+    .then(snapshot => {
+      const inLogs = {};
+      const outLogs = new Set();
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.type === "IN") {
+          inLogs[data.uid] = data;
+        } else if (data.type === "OUT") {
+          outLogs.add(data.uid);
+        }
+      });
+
+      const available = Object.keys(inLogs).filter(uid => !outLogs.has(uid));
+      const ul = document.getElementById("todayList");
+      ul.innerHTML = "";
+
+      available.forEach(uid => {
+        db.collection("users").doc(uid).get().then(userDoc => {
+          const name = userDoc.data().name || uid;
+          const info = inLogs[uid];
+          const item = document.createElement("li");
+          item.innerText = `${name} - Shift ${info.shift || ""} at ${new Date(info.timestamp).toLocaleTimeString()}`;
+          ul.appendChild(item);
+        });
+      });
+    });
+}
+
 function loadAllLogs() {
   const from = new Date(document.getElementById("fromDate").value);
   const to = new Date(document.getElementById("toDate").value);
@@ -76,24 +127,15 @@ function loadAllLogs() {
       const d = doc.data();
       const time = new Date(d.timestamp);
       if (time >= from && time <= to) {
-        const row = `<tr><td>${d.uid}</td><td>${d.type}</td><td>${d.shift || ""}</td><td>${d.note || ""}</td><td>${time.toLocaleString()}</td></tr>`;
-        tbody.innerHTML += row;
+        db.collection("users").doc(d.uid).get().then(userDoc => {
+          const name = userDoc.exists ? (userDoc.data().name || d.uid) : d.uid;
+          const row = `<tr><td>${name}</td><td>${d.type}</td><td>${d.shift || ""}</td><td>${d.note || ""}</td><td>${time.toLocaleString()}</td></tr>`;
+          tbody.innerHTML += row;
+        });
       }
     });
   });
 }
-
-function logout() {
-  firebase.auth().signOut()
-    .then(() => {
-      // Redirect to login page (index.html)
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert("Error during logout: " + error.message);
-    });
-}
-
 
 function exportLogs() {
   const rows = [["User", "Type", "Shift", "Note", "Timestamp"]];
